@@ -16,11 +16,8 @@ class Elevator {
     clearInterval(upd);
   }
   update() {
-   // console.log(`Requests ${this.requests}`);
-    for( let request of this.requests ){
-   
-    
-
+   // console.log(`Requests ${this.requests}`)
+    this.log();
     let results = this.waitingList.filter(request => request.originFloor == this.floor);
     
     if(results.length>0){
@@ -29,23 +26,11 @@ class Elevator {
       //  console.log(`Waiter ${waiter}`);
         this.passengers.push(waiter);
       }
-      console.log(`Floor ${this.floor}`);
-      console.log("Waiting list");
-      console.log(this.waitingList);
-      console.log("Pssg");
-      console.log(this.passengers);
-      this.log();
     }
 
     let resultsDown = this.passengers.filter(request => request.destinationFloor == this.floor);
     if(resultsDown.length>0){
       this.passengers = this.passengers.filter(request => request.destinationFloor != this.floor);
-      console.log(`Floor ${this.floor}`);
-      console.log("Waiting list");
-      console.log(this.waitingList);
-      console.log("Pssg");
-      console.log(this.passengers);
-      this.log();
     }
     
     if(this.direction == 'UP')
@@ -54,10 +39,8 @@ class Elevator {
       
     }else this.floorDown();
 
-  
-
     
-    }
+
    }
   _passengersEnter() { 
 
@@ -78,7 +61,16 @@ class Elevator {
     this.requests.push(person.originFloor);
   }
   log() { 
-    console.log(`Direction: ${this.direction} | Floor: ${this.floor}`);
+    console.log(`Direction: ${this.direction} | Floor: ${this.floor} | WL: ${this.waitingList.length} | PS: ${this.passengers.length}` );
+    if(this.waitingList.length>0){
+      console.log("Waiting list");
+      console.log(this.waitingList);
+    }
+    if(this.passengers.length>0){
+      console.log("Passengers");
+      console.log(this.passengers);
+    }
+    
   }
 }
 
