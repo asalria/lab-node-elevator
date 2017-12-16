@@ -10,28 +10,68 @@ class Elevator {
   }
 
   start() { 
-    var upd = setInterval(update,1000);
+    var upd = setInterval(this.update.bind(this),1000);
   }
   stop() { 
     clearInterval(upd);
   }
   update() {
-    for( let request of requests ){
-      
+   // console.log(`Requests ${this.requests}`);
+    for( let request of this.requests ){
+   
+    
+
+    let results = this.waitingList.filter(request => request.originFloor == this.floor);
+    
+    if(results.length>0){
+      this.waitingList = this.waitingList.filter(request => request.originFloor != this.floor);
+      for (let waiter of results){
+      //  console.log(`Waiter ${waiter}`);
+        this.passengers.push(waiter);
+      }
+      console.log(`Floor ${this.floor}`);
+      console.log("Waiting list");
+      console.log(this.waitingList);
+      console.log("Pssg");
+      console.log(this.passengers);
+      this.log();
     }
-    log();
+
+    let resultsDown = this.passengers.filter(request => request.destinationFloor == this.floor);
+    if(resultsDown.length>0){
+      this.passengers = this.passengers.filter(request => request.destinationFloor != this.floor);
+      console.log(`Floor ${this.floor}`);
+      console.log("Waiting list");
+      console.log(this.waitingList);
+      console.log("Pssg");
+      console.log(this.passengers);
+      this.log();
+    }
+    
+    if(this.direction == 'UP')
+    {
+      this.floorUp();
+      
+    }else this.floorDown();
+
+  
+
+    
+    }
    }
-  _passengersEnter() { }
+  _passengersEnter() { 
+
+  }
   _passengersLeave() { }
   floorUp() { 
     if(this.floor < this.MAXFLOOR){
       this.floor++;
-    }
+    }else this.direction = "DOWN";
   }
   floorDown() { 
     if(this.floor > 0){
       this.floor--;
-    }
+    }else this.direction = "UP";
   }
   call(person) { 
     this.waitingList.push(person);

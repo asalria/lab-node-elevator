@@ -14,10 +14,12 @@ for( let name of names ){
     }
    var pers = new Person(name,origin,destination);
     persons.push(pers);
+    elevator.call(pers);
 }
 
+console.log(persons);
 
-
+elevator.start();
 
 
 
