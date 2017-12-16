@@ -7,10 +7,13 @@ class Elevator {
     this.direction = "UP";
     this.passengers = [];
     this.waitingList = [];
+
+ //   let arr = [...this.passengers, ...this.waitingList];
+
   }
 
   start() { 
-    var upd = setInterval(this.update.bind(this),1000);
+    var upd = setInterval(this.update.bind(this),2000);
   }
   stop() { 
     clearInterval(upd);
@@ -23,14 +26,19 @@ class Elevator {
     if(results.length>0){
       this.waitingList = this.waitingList.filter(request => request.originFloor != this.floor);
       for (let waiter of results){
-      //  console.log(`Waiter ${waiter}`);
+    //    console.log(`Waiter ${waiter}`);
         this.passengers.push(waiter);
+        console.log(`${waiter.name} has entered the elevator`);
       }
     }
 
     let resultsDown = this.passengers.filter(request => request.destinationFloor == this.floor);
     if(resultsDown.length>0){
       this.passengers = this.passengers.filter(request => request.destinationFloor != this.floor);
+      for (let waiter of resultsDown){
+     //     console.log(`Waiter ${waiter}`);
+          console.log(`${waiter.name} has left the elevator`);
+      }
     }
     
     if(this.direction == 'UP')
@@ -62,6 +70,7 @@ class Elevator {
   }
   log() { 
     console.log(`Direction: ${this.direction} | Floor: ${this.floor} | WL: ${this.waitingList.length} | PS: ${this.passengers.length}` );
+   /*
     if(this.waitingList.length>0){
       console.log("Waiting list");
       console.log(this.waitingList);
@@ -70,7 +79,7 @@ class Elevator {
       console.log("Passengers");
       console.log(this.passengers);
     }
-    
+    */
   }
 }
 
